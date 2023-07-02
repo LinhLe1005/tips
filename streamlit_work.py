@@ -44,7 +44,7 @@ with tab2:
             key = "r2")
     
     tbr = st.slider("Choose a range for total bill:", 
-                    df['total_bill'].min(), df['total_bill'].max(), (25.0, 45.0)
+                    df['total_bill'].min(), df['total_bill'].max(), (10.0, 30.0)
                     )
     st.write("Total bill range:", tbr)
 
