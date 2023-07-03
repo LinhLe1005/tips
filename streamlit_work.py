@@ -19,12 +19,12 @@ df = px.data.tips()
 
 st.header("Original data set")
 
-st.text("This is a data frame with 244 observations on 8 variables.")
+st.text("This is a data frame with 244 observations on 7 variables.")
 
 st.markdown(
 """
 - **Description**: One waiter recorded information about each tip he received over a period of a few months working in one restaurant. 
-He collected 8 variables.
+He collected 7 variables.
 - **Variables**:
     1. **total_bill**: a numeric vector, the bill amount (dollars)
     2. **tip**: a numeric vector, the tip amount (dollars)
