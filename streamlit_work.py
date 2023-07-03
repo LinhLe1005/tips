@@ -41,7 +41,7 @@ st.dataframe(df, width = 500)
 st.header("Tip versus total bill")
 st.text("We explore the relation between the amount of tip and the total bill.")
 
-tab1, tab2 = st.tabs(["General scatter plot", "Counts"])
+tab1, tab2 = st.tabs(["General relation", "Counts"])
 with tab1:
     col1, col2 = st.columns([1,3])
     with col1:
@@ -58,7 +58,9 @@ with tab1:
                   title = "Amount of tip versus total bill")
         st.plotly_chart(fig1, theme = "streamlit", use_container_width=True)
 
-    fig1a = px.scatter(df, x="total_bill", y="tip", color=by_what, facet_col=by_what)
+    fig1a = px.scatter(df, x="total_bill", y="tip", 
+                       labels={"total_bill": "total bill"},
+                       color=by_what, facet_col=by_what)
     st.plotly_chart(fig1a, theme = "streamlit", use_container_width=True)
 with tab2:
     by_what_2 = st.radio(
