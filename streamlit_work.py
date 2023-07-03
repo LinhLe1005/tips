@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_space import space
 import plotly.express as px
 import pandas as pd
 import numpy as np
@@ -10,15 +11,32 @@ with st.sidebar:
     st.text("Description: This serves as an illustration \n for an Interactive Web Application \n for Python Project 2.")
 
 st.title("Tips")
-st.markdown("We analyze the :blue[tips] data set available in the plotly.express package.")
+st.markdown("We analyze the :blue[tips] data set available in the :blue[plotly.express] package.")
 
 st.divider()
 
 df = px.data.tips()
 
 st.header("Original data set")
-st.text("The first 10 rows of the data set is displayed below.")
-st.write(df.head(10))
+
+st.text("This is a data frame with 244 observations on 8 variables.")
+
+st.markdown(
+"""
+- **Description**: One waiter recorded information about each tip he received over a period of a few months working in one restaurant. 
+He collected 8 variables.
+- **Variables**:
+    1. **total_bill**: a numeric vector, the bill amount (dollars)
+    2. **tip**: a numeric vector, the tip amount (dollars)
+    3. **sex**: a factor with levels Female Male, gender of the payer of the bill
+    4. **smoker**: a factor with levels No Yes, whether the party included smokers
+    5. **day**: a factor with levels Friday Saturday Sunday Thursday, day of the week
+    6. **time**: a factor with levels Day Night, rough time of day
+    7. **size**: a numeric vector, number of people in party
+"""
+)
+
+st.dataframe(df, width = 500)
 
 st.header("Tip versus total bill")
 st.text("We explore the relation between the amount of tip and the total bill.")
@@ -27,6 +45,7 @@ tab1, tab2 = st.tabs(["General scatter plot", "Counts"])
 with tab1:
     col1, col2 = st.columns([1,3])
     with col1:
+        space(lines=10)
         by_what = st.radio(
             "Choose a category:",
             ('sex', 'smoker', 'day', 'time', 'size'),
@@ -34,8 +53,13 @@ with tab1:
     with col2:
         fig1 = px.scatter(df, x = "total_bill", y = "tip", color = by_what,
                   labels={"total_bill": "total bill"},
-                  size = "tip", title = "Amount of tip versus total bill")
+                  size = "tip", 
+                  marginal_x="histogram", marginal_y="histogram",
+                  title = "Amount of tip versus total bill")
         st.plotly_chart(fig1, theme = "streamlit", use_container_width=True)
+
+    fig1a = px.scatter(df, x="total_bill", y="tip", color=by_what, facet_col=by_what)
+    st.plotly_chart(fig1a, theme = "streamlit", use_container_width=True)
 with tab2:
     by_what_2 = st.radio(
             "Choose a category:",
@@ -44,7 +68,7 @@ with tab2:
             key = "r2")
     
     tbr = st.slider("Choose a range for total bill:", 
-                    df['total_bill'].min(), df['total_bill'].max(), (10.0, 30.0)
+                    df['total_bill'].min(), df['total_bill'].max(), (25.0, 45.0)
                     )
     st.write("Total bill range:", tbr)
 
